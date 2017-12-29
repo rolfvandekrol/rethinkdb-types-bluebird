@@ -13,8 +13,10 @@
 //   $ tsc --noImplicitAny --module commonjs -p rethinkdb/
 
 /// <reference types="node"/>
+/// <reference types="bluebird" />
 
 import { ConnectionOptions as TLSConnectionOptions } from "tls";
+import * as Promise from "bluebird";
 
 /**
  * https://rethinkdb.com/api/javascript/
