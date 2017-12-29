@@ -16,7 +16,7 @@
 /// <reference types="bluebird" />
 
 import { ConnectionOptions as TLSConnectionOptions } from "tls";
-import * as Promise from "bluebird";
+import * as B from "bluebird";
 
 /**
  * https://rethinkdb.com/api/javascript/
@@ -29,8 +29,8 @@ declare module "rethinkdb" {
      */
     export function connect(opts: ConnectionOptions, cb: (err: ReqlDriverError, conn: Connection) => void): void;
     export function connect(host: string, cb: (err: ReqlDriverError, conn: Connection) => void): void;
-    export function connect(opts: ConnectionOptions): Promise<Connection>;
-    export function connect(host: string): Promise<Connection>;
+    export function connect(opts: ConnectionOptions): B<Connection>;
+    export function connect(host: string): B<Connection>;
 
     export function dbCreate(name: string): Operation<CreateResult>;
     export function dbDrop(name: string): Operation<DropResult>;
@@ -78,10 +78,10 @@ declare module "rethinkdb" {
         next<T>(cb: (err: Error, row: T) => void): void;
         toArray(cb: (err: Error, rows: any[]) => void): void;
         toArray<T>(cb: (err: Error, rows: T[]) => void): void;
-        toArray(): Promise<any[]>;
-        toArray<T>(): Promise<T[]>;
+        toArray(): B<any[]>;
+        toArray<T>(): B<T[]>;
         close(cb: (err: Error) => void): void;
-        close(): Promise<void>;
+        close(): B<void>;
     }
 
     interface Row extends Expression<any> {
@@ -140,12 +140,12 @@ declare module "rethinkdb" {
 
         close(cb: (err: Error) => void): void;
         close(opts: NoReplyWait, cb: (err: Error) => void): void;
-        close(): Promise<void>;
-        close(opts: NoReplyWait): Promise<void>;
+        close(): B<void>;
+        close(opts: NoReplyWait): B<void>;
 
         reconnect(cb: (err: Error, conn: Connection) => void): void;
         reconnect(opts: NoReplyWait, cb: (err: Error, conn: Connection) => void): void;
-        reconnect(opts?: NoReplyWait): Promise<Connection>;
+        reconnect(opts?: NoReplyWait): B<Connection>;
 
         use(dbName: string): void;
         addListener(event: string, cb: Function): void;
@@ -497,8 +497,8 @@ declare module "rethinkdb" {
          */
         run(conn: Connection, opts: OperationOptions, cb: (err: Error, result: T) => void): void;
         run(conn: Connection, cb: (err: Error, result: T) => void): void;
-        run(conn: Connection, opts: OperationOptions): Promise<T>;
-        run(conn: Connection): Promise<T>;
+        run(conn: Connection, opts: OperationOptions): B<T>;
+        run(conn: Connection): B<T>;
     }
 
     interface Aggregator { }
