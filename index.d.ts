@@ -182,6 +182,11 @@ declare module "rethinkdb" {
         delete(options?: UpdateOptions): Operation<WriteResult>;
     }
 
+    interface IndexOptions {
+        multi?: boolean;
+        geo?: boolean;
+    }
+
     /**
      * See: https://rethinkdb.com/api/javascript/changes/
      */
@@ -242,7 +247,7 @@ declare module "rethinkdb" {
     }
 
     interface Table extends Sequence, HasFields<Sequence>, HasConfig {
-        indexCreate(name: string, index?: ExpressionFunction<any>): Operation<CreateResult>;
+        indexCreate(name: string, index?: ExpressionFunction<any>, options?: IndexOptions): Operation<CreateResult>;
         indexDrop(name: string): Operation<DropResult>;
         indexList(): Operation<string[]>;
         indexWait(name?: string): Operation<Array<{ index: string, ready: true, function: number, multi: boolean, geo: boolean, outdated: boolean }>>;
