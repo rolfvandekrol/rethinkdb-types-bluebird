@@ -152,7 +152,11 @@ declare module "rethinkdb" {
         on(event: string, cb: Function): void;
     }
 
-    interface Db {
+    interface HasConfig {
+        config<TObjectType extends object>(): Operation<TObjectType | null> & Writeable;
+    }
+
+    interface Db extends HasConfig {
         tableCreate(name: string, options?: TableOptions): Operation<CreateResult>;
         tableDrop(name: string): Operation<DropResult>;
         tableList(): Operation<string[]>;
@@ -237,7 +241,7 @@ declare module "rethinkdb" {
         hasFields(...fields: string[]): T;
     }
 
-    interface Table extends Sequence, HasFields<Sequence> {
+    interface Table extends Sequence, HasFields<Sequence>, HasConfig {
         indexCreate(name: string, index?: ExpressionFunction<any>): Operation<CreateResult>;
         indexDrop(name: string): Operation<DropResult>;
         indexList(): Operation<string[]>;
